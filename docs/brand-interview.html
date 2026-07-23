@@ -1,4 +1,4 @@
-<title>The Brand Voice Interview</title>
+<title>Brand DNA Interview</title>
 <style>
   :root {
     --ground: #F4F3EF;
@@ -40,12 +40,10 @@
   * { box-sizing: border-box; }
   body {
     margin: 0; background: var(--ground); color: var(--ink);
-    font-family: var(--sans); line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
+    font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 140px; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 150px; }
 
-  /* Header */
   header { padding: 40px 0 8px; }
   .eyebrow {
     font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
@@ -57,107 +55,108 @@
     font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: -.01em;
     margin: 14px 0 10px;
   }
-  .sub { color: var(--muted); font-size: 17px; max-width: 46ch; margin: 0; }
+  .sub { color: var(--muted); font-size: 17px; max-width: 48ch; margin: 0; }
 
-  /* Progress */
   .progress { position: sticky; top: 0; z-index: 5; padding: 14px 0 12px;
     background: linear-gradient(var(--ground) 72%, transparent);
     display: flex; align-items: center; gap: 12px; }
   .bar { flex: 1; height: 5px; background: var(--line); border-radius: 999px; overflow: hidden; }
   .bar > i { display: block; height: 100%; width: 0; background: var(--accent);
     border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
-  .stage { font-size: 12px; color: var(--muted); white-space: nowrap;
-    font-variant-numeric: tabular-nums; }
+  .stage { font-size: 12px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-  /* Chat */
   .thread { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
   .row { display: flex; gap: 12px; max-width: 100%; animation: rise .45s cubic-bezier(.22,1,.36,1) both; }
   .row.me { flex-direction: row-reverse; }
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
-  @media (prefers-reduced-motion: reduce) { .row { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .row, .chips { animation: none; } }
   .avatar {
     flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
-    background: var(--accent); color: #fff; display: grid; place-items: center;
-    font-family: var(--serif); font-size: 16px; font-weight: 600; margin-top: 2px;
-    box-shadow: var(--shadow);
+    background: var(--accent); color: #06110f; display: grid; place-items: center;
+    font-family: var(--serif); font-size: 16px; font-weight: 600; margin-top: 2px; box-shadow: var(--shadow);
   }
-  :root[data-theme="dark"] .avatar, .avatar { color: #06110f; }
   .bubble {
     background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
-    padding: 13px 16px; box-shadow: var(--shadow); font-size: 16px;
-    border-top-left-radius: 4px;
+    padding: 13px 16px; box-shadow: var(--shadow); font-size: 16px; border-top-left-radius: 4px;
   }
-  .me .bubble { background: var(--accent-soft); border-color: transparent; border-top-left-radius: 14px; border-top-right-radius: 4px; }
+  .me .bubble { background: var(--accent-soft); border-color: transparent;
+    border-top-left-radius: 14px; border-top-right-radius: 4px; }
   .section-tag { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase;
     color: var(--glow); font-weight: 700; margin: 20px 0 -4px 46px; }
   .typing { display: inline-flex; gap: 4px; padding: 4px 2px; }
-  .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
-    animation: blink 1.2s infinite; }
+  .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite; }
   .typing i:nth-child(2){ animation-delay:.2s } .typing i:nth-child(3){ animation-delay:.4s }
   @keyframes blink { 0%,60%,100%{ opacity:.25; transform: translateY(0) } 30%{ opacity:1; transform: translateY(-3px) } }
 
-  /* Composer */
+  /* Projective chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 2px 46px; max-width: 580px;
+    animation: rise .4s cubic-bezier(.22,1,.36,1) both; }
+  .chip { border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    padding: 11px 15px; border-radius: 13px; font-family: var(--sans); font-size: 14.5px;
+    line-height: 1.3; cursor: pointer; text-align: left; box-shadow: var(--shadow);
+    transition: transform .12s, border-color .2s, background .2s; }
+  .chip:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .chips.done .chip { opacity: .45; pointer-events: none; }
+  .chips.done .chip.picked { opacity: 1; border-color: var(--accent); background: var(--accent-soft); }
+
   .composer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
     background: linear-gradient(transparent, var(--ground) 30%); padding: 20px; }
-  .composer-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 10px;
-    align-items: flex-end; background: var(--surface); border: 1px solid var(--line);
-    border-radius: 18px; padding: 10px 10px 10px 16px; box-shadow: var(--shadow); }
-  textarea {
-    flex: 1; border: 0; resize: none; background: transparent; color: var(--ink);
-    font-family: var(--sans); font-size: 16px; line-height: 1.5; max-height: 180px;
-    padding: 6px 0; outline: none;
-  }
+  .composer-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 10px; align-items: flex-end;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    padding: 10px 10px 10px 16px; box-shadow: var(--shadow); }
+  textarea { flex: 1; border: 0; resize: none; background: transparent; color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.5; max-height: 180px; padding: 6px 0; outline: none; }
   textarea::placeholder { color: var(--muted); }
-  .send {
-    flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px; border: 0;
-    background: var(--accent); color: #fff; cursor: pointer; display: grid; place-items: center;
-    transition: transform .12s, opacity .2s;
-  }
-  :root[data-theme="dark"] .send { color: #06110f; }
+  .send { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px; border: 0;
+    background: var(--accent); color: #06110f; cursor: pointer; display: grid; place-items: center;
+    transition: transform .12s, opacity .2s; }
   .send:hover { transform: translateY(-1px); }
   .send:disabled { opacity: .35; cursor: not-allowed; transform: none; }
   .send svg { width: 20px; height: 20px; }
   .hint { max-width: 720px; margin: 8px auto 0; font-size: 12px; color: var(--muted);
     display: flex; justify-content: space-between; padding: 0 6px; }
-  .skip { background: none; border: 0; color: var(--muted); cursor: pointer;
-    font-size: 12px; text-decoration: underline; padding: 0; }
+  .skip { background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 12px;
+    text-decoration: underline; padding: 0; font-family: var(--sans); }
   .skip:hover { color: var(--accent); }
 
-  /* End card */
   .final { margin-top: 26px; background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-  .final h2 { font-family: var(--serif); font-size: 26px; margin: 0; padding: 22px 22px 4px; }
-  .final p.lede { color: var(--muted); margin: 0; padding: 0 22px 16px; font-size: 15px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 22px 20px; }
+  .final h2 { font-family: var(--serif); font-size: 26px; margin: 0; padding: 22px 22px 2px; }
+  .dna { padding: 6px 22px 4px; }
+  .dna .arch { font-family: var(--serif); font-size: 21px; color: var(--accent); margin: 6px 0 2px; }
+  .dna .arch small { color: var(--muted); font-family: var(--sans); font-size: 13px; font-weight: 600; }
+  .dna p { margin: 4px 0 12px; font-size: 15px; color: var(--ink); }
+  .dna .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 14px; }
+  .tag { font-size: 12px; font-weight: 600; letter-spacing: .02em; padding: 5px 11px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line); color: var(--ink); }
+  .lede { color: var(--muted); margin: 0; padding: 0 22px 14px; font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 6px 22px 20px; }
   .btn { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
-    padding: 11px 16px; border-radius: 11px; font-size: 14px; font-weight: 600;
-    cursor: pointer; font-family: var(--sans); transition: transform .12s, border-color .2s; }
+    padding: 11px 16px; border-radius: 11px; font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: var(--sans); transition: transform .12s, border-color .2s; }
   .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
-  .btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
-  :root[data-theme="dark"] .btn.primary { color: #06110f; }
-  .preview { border-top: 1px solid var(--line); background: var(--surface-2);
-    max-height: 340px; overflow: auto; }
+  .btn.primary { background: var(--accent); color: #06110f; border-color: transparent; }
+  .preview { border-top: 1px solid var(--line); background: var(--surface-2); max-height: 340px; overflow: auto; }
   .preview pre { margin: 0; padding: 20px 22px; font-family: var(--mono); font-size: 12.5px;
     line-height: 1.7; white-space: pre-wrap; word-break: break-word; color: var(--ink); }
   .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%) translateY(20px);
     background: var(--ink); color: var(--ground); padding: 10px 18px; border-radius: 999px;
     font-size: 13px; font-weight: 600; opacity: 0; transition: all .3s; pointer-events: none; z-index: 20; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .resume { display:flex; gap:10px; align-items:center; justify-content:center;
-    margin-top:14px; font-size:13px; color:var(--muted); }
-  .resume button { font-size:13px; }
+  .resume { display:flex; gap:10px; align-items:center; justify-content:center; margin-top:14px; font-size:13px; color:var(--muted); }
 </style>
 
 <div class="wrap">
   <header>
     <div class="eyebrow">
-      Brand voice studio
+      Brand DNA studio
       <canvas class="wave" id="wave" width="128" height="40" aria-hidden="true"></canvas>
     </div>
-    <h1 id="title">Let's find your voice.</h1>
-    <p class="sub" id="sub">A short interview about you and your brand. Answer like you're
-      talking to a friend who's genuinely curious — the specific, honest, slightly messy
-      answers are the ones worth gold. About 20 minutes.</p>
+    <h1 id="title">Let's decode your brand's DNA.</h1>
+    <p class="sub">A short, conversational interview. Some questions you'll answer in your
+      own words; others are quick instincts — just tap what feels true. By the end we'll have
+      surfaced your brand's archetype, its aesthetic, and the world it lives in. About 15–20 minutes.</p>
     <div class="resume" id="resumeBar" hidden>
       <span>Found a saved session.</span>
       <button class="btn" id="resumeBtn">Resume</button>
@@ -192,309 +191,402 @@
 (function () {
   "use strict";
 
-  // ---- The interview -------------------------------------------------------
+  // ===== Archetype library ================================================
+  const ARCH = {
+    Innocent:  "Optimistic and pure — makes people feel safe, hopeful, and at ease.",
+    Sage:      "The truth-seeker — leads with wisdom, clarity, and hard-won expertise.",
+    Explorer:  "Restless and free — pulls people toward discovery and authenticity.",
+    Rebel:     "The disruptor — challenges the status quo and frees people to break the rules.",
+    Magician:  "The visionary — turns bold ideas into transformation and wonder.",
+    Hero:      "Courageous and driven — inspires people to rise and prove what's possible.",
+    Lover:     "Sensual and intimate — creates beauty, closeness, and deep connection.",
+    Jester:    "Playful and alive — brings joy, wit, and permission to lighten up.",
+    Everyman:  "Real and grounded — honest, relatable, belongs anywhere, no pretense.",
+    Caregiver: "Warm and protective — serves, nurtures, and makes people feel held.",
+    Ruler:     "Commanding and refined — sets the standard, radiates excellence and prestige.",
+    Creator:   "Imaginative and original — driven to craft and express what didn't exist before."
+  };
+  const ARCH_AES = {
+    Innocent:  "light, airy, clean palettes and simple, honest type — pure and hopeful.",
+    Sage:      "calm, considered, ink-on-paper restraint with a classical serif — clarity over noise.",
+    Explorer:  "earthy, rugged, natural textures and a sturdy grotesque — open-road authenticity.",
+    Rebel:     "high-contrast and raw, broken grids and a defiant display face — anti-polish on purpose.",
+    Magician:  "deep, luminous grounds and a refined modern face — a real sense of wonder.",
+    Hero:      "bold and dynamic, strong verticals and a powerful condensed face — momentum.",
+    Lover:     "warm, sensual neutrals, rich accents and an elegant high-contrast serif — intimate and tactile.",
+    Jester:    "bright, kinetic color and rounded, playful type — joy you can see.",
+    Everyman:  "honest warm neutrals and an unfussy humanist sans — approachable and real.",
+    Caregiver: "soft, warm, gentle contrast and a friendly rounded serif — safe and reassuring.",
+    Ruler:     "deep, high-contrast grounds, generous negative space and a sharp serif — quiet luxury.",
+    Creator:   "expressive and unexpected — confident color, editorial layouts and type with real personality."
+  };
+
+  // ===== The interview ====================================================
+  // type: "text" -> free response ; "choice" -> projective tap (scores archetypes)
   const SECTIONS = [
-    { tag: "The person", intro: "First, you — the human behind the brand. Forget the pitch for a minute.",
+    { tag: "The person", intro: "First — you, the human behind it. Forget the pitch for a minute.",
       qs: [
-        { k:"who", q:"Who are you, in your own words — not your job title?", ph:"I'm the kind of person who…", short:"Go past the label — what actually makes you, you?" },
-        { k:"origin", q:"Where did this work start for you? Tell me the origin story.", ph:"It really began when…", short:"Take me to the moment it clicked. A place, a year, a feeling." },
-        { k:"before", q:"What did you do before this — and what carried over?", ph:"Before this I…", short:"" },
+        { type:"text", k:"who",   q:"Who are you, in your own words — not your job title?", ph:"I'm the kind of person who…", short:"Go past the label. What actually makes you, you?" },
+        { type:"text", k:"spark", q:"When did this stop being a job and start feeling like yours?", ph:"It really became mine when…", short:"Take me to the moment. A place, a year, a feeling." },
+        { type:"text", k:"belief",q:"What's something you believe now that you'd have argued against 5 years ago?", ph:"I used to think… now I know…", short:"" },
       ]},
-    { tag: "Values & drive", intro: "Now the fuel. What's actually under the hood.",
+    { tag: "The brand, honestly", intro: "Now the work — the good and the unfinished.",
       qs: [
-        { k:"care", q:"What do you genuinely care about — the thing that gets you out of bed?", ph:"What I care about most is…", short:"Say it plainly, no mission-statement voice." },
-        { k:"belief", q:"What's a belief you hold now that you'd have argued against 5 years ago?", ph:"I used to think… now I know…", short:"" },
-        { k:"line", q:"What's a line you won't cross — even for money or reach?", ph:"I'd never…", short:"" },
+        { type:"text", k:"do",      q:"In one sentence, what do you do — told to a smart 12-year-old?", ph:"I help ___ do ___ so they can ___.", short:"Keep it concrete — a kid should picture it." },
+        { type:"text", k:"proud",   q:"What part of your brand are you quietly proudest of — the thing that's genuinely strong?", ph:"What I'm proudest of is…", short:"Name the specific strength, not a nice-sounding one." },
+        { type:"text", k:"fragile", q:"And what part still feels unfinished, or quietly keeps you up at night?", ph:"The part I'm still figuring out is…", short:"Be honest — this is where the growth is." },
       ]},
-    { tag: "The brand", intro: "Let's talk about the actual work.",
+    { tag: "Where it's going", intro: "Look up for a second.",
       qs: [
-        { k:"do", q:"In one sentence, what do you do — explained to a smart 12-year-old?", ph:"I help ___ do ___ so they can ___.", short:"Keep it concrete — a kid should picture it." },
-        { k:"problem", q:"What problem do you solve, and for whom, specifically?", ph:"I solve ___ for people who ___.", short:"Name the exact person and the exact pain." },
-        { k:"choose", q:"Why do people choose you over the obvious alternative?", ph:"People pick me because…", short:"" },
+        { type:"text", k:"grow",    q:"Picture your brand three years out, thriving. What's different? What does it look and feel like?", ph:"In three years…", short:"Paint it — scale, feeling, the day-to-day." },
+        { type:"text", k:"winning", q:"Beyond money — what would make you feel it truly won?", ph:"I'd feel it won if…", short:"" },
       ]},
-    { tag: "Audience & angle", intro: "Who you're for — and the thing you're willing to fight about.",
+    { tag: "Quick instincts", intro: "Now just go with your gut — tap whatever feels most like your brand. No overthinking.",
       qs: [
-        { k:"ideal", q:"Describe your ideal person — not their age, their situation and their pain.", ph:"They're someone who's stuck on…", short:"Picture one real person you've helped. Describe them." },
-        { k:"secret", q:"What does your audience secretly believe or fear that nobody says out loud?", ph:"Deep down they're afraid that…", short:"" },
-        { k:"contrarian", q:"What's your contrarian take — the hill you'll die on?", ph:"Everyone says ___, but actually ___.", short:"What does your whole industry get wrong?" },
+        { type:"choice", k:"c_gather", q:"Your brand hosts a gathering. What's the vibe?", opts:[
+            { l:"An intimate candlelit dinner, real conversation", a:{Lover:2,Sage:1}, aes:["warm","intimate"], w:"candlelit dinners" },
+            { l:"A big open table — everyone's welcome", a:{Everyman:2,Caregiver:1}, aes:["warm","honest"], w:"open tables" },
+            { l:"A rooftop launch, bold and buzzing", a:{Ruler:2,Magician:1}, aes:["bold","luxe"], w:"rooftop launches" },
+            { l:"An unplanned adventure — nobody knows where it ends", a:{Explorer:2,Jester:1}, aes:["free","raw"], w:"spontaneous adventures" },
+            { l:"A late-night studio session, making something", a:{Creator:2,Hero:1}, aes:["editorial","tactile"], w:"late studio sessions" },
+        ]},
+        { type:"choice", k:"c_sound", q:"The soundtrack of your brand's world?", opts:[
+            { l:"Warm vinyl — jazz, soul, timeless", a:{Lover:2,Sage:1}, aes:["warm","timeless"], w:"warm vinyl soul" },
+            { l:"Anthemic, building to a drop", a:{Hero:2,Magician:1}, aes:["bold","dynamic"], w:"anthemic builds" },
+            { l:"Underground, a little defiant", a:{Rebel:2,Explorer:1}, aes:["raw","edgy"], w:"underground defiance" },
+            { l:"Feel-good, everyone sings along", a:{Jester:2,Everyman:1}, aes:["bright","warm"], w:"feel-good singalongs" },
+            { l:"Minimal, ambient, refined", a:{Ruler:2,Sage:1}, aes:["minimal","refined"], w:"ambient minimalism" },
+        ]},
+        { type:"choice", k:"c_shelf", q:"A book that belongs on your brand's shelf?", opts:[
+            { l:"A worn philosophy classic", a:{Sage:2,Ruler:1}, aes:["classic","restrained"], w:"philosophy classics" },
+            { l:"A manifesto that breaks the rules", a:{Rebel:2,Creator:1}, aes:["raw","editorial"], w:"rule-breaking manifestos" },
+            { l:"A sweeping adventure novel", a:{Explorer:2,Hero:1}, aes:["earthy","cinematic"], w:"adventure epics" },
+            { l:"A gorgeous art & design monograph", a:{Creator:2,Lover:1}, aes:["editorial","luxe"], w:"art monographs" },
+            { l:"A warm, practical guide that helps people", a:{Caregiver:2,Everyman:1}, aes:["warm","honest"], w:"practical guides" },
+        ]},
+        { type:"choice", k:"c_place", q:"Where does your brand feel most at home?", opts:[
+            { l:"A minimalist gallery — every object intentional", a:{Ruler:2,Creator:1}, aes:["minimal","refined"], w:"quiet galleries" },
+            { l:"A sunlit workshop, hands busy", a:{Creator:2,Everyman:1}, aes:["tactile","warm"], w:"sunlit workshops" },
+            { l:"A mountain trail at first light", a:{Explorer:2,Hero:1}, aes:["earthy","natural"], w:"mountain trails" },
+            { l:"A café corner where they know your order", a:{Everyman:2,Caregiver:1}, aes:["warm","honest"], w:"neighbourhood cafés" },
+            { l:"A grand old library", a:{Sage:2,Ruler:1}, aes:["classic","luxe"], w:"grand libraries" },
+        ]},
+        { type:"choice", k:"c_material", q:"Your brand as a material you could touch?", opts:[
+            { l:"Raw concrete & blackened steel", a:{Rebel:2,Ruler:1}, aes:["raw","bold"], w:"concrete & steel" },
+            { l:"Warm oak & natural linen", a:{Everyman:2,Lover:1}, aes:["warm","tactile"], w:"oak & linen" },
+            { l:"Polished marble & brushed gold", a:{Ruler:2,Lover:1}, aes:["luxe","refined"], w:"marble & gold" },
+            { l:"Weathered leather & waxed canvas", a:{Explorer:2,Hero:1}, aes:["earthy","rugged"], w:"leather & canvas" },
+            { l:"Bright paper & wet paint", a:{Creator:2,Jester:1}, aes:["bright","expressive"], w:"paper & paint" },
+        ]},
+        { type:"choice", k:"c_palette", q:"Which world do your brand's colors live in?", opts:[
+            { l:"Deep, moody, high-contrast", a:{Ruler:1,Rebel:1,Magician:1}, aes:["dark","bold"], w:"deep & moody" },
+            { l:"Warm, earthy, sun-faded", a:{Explorer:1,Everyman:1,Lover:1}, aes:["earthy","warm"], w:"warm earth tones" },
+            { l:"Clean, bright, airy", a:{Innocent:1,Sage:1,Everyman:1}, aes:["light","clean"], w:"clean & airy" },
+            { l:"Rich, saturated, expressive", a:{Creator:2,Jester:1}, aes:["bright","expressive"], w:"saturated color" },
+            { l:"Refined neutrals, a whisper of luxe", a:{Ruler:2,Lover:1}, aes:["refined","luxe"], w:"refined neutrals" },
+        ]},
+        { type:"choice", k:"c_weekend", q:"Your brand takes a perfect day off. What is it?", opts:[
+            { l:"Slow morning, market, cooking for friends", a:{Lover:1,Everyman:1,Caregiver:1}, aes:["warm","tactile"], w:"slow home rituals" },
+            { l:"Out in nature, off-grid", a:{Explorer:2,Hero:1}, aes:["earthy","natural"], w:"off-grid nature" },
+            { l:"Galleries, bookshops, a great film", a:{Creator:1,Sage:1,Lover:1}, aes:["editorial","classic"], w:"culture crawls" },
+            { l:"Lost in a side project, building", a:{Creator:2,Hero:1}, aes:["tactile","editorial"], w:"maker's flow" },
+            { l:"A big table, loud laughter, good wine", a:{Jester:1,Everyman:1,Lover:1}, aes:["warm","bright"], w:"loud good tables" },
+        ]},
+        { type:"choice", k:"c_feeling", q:"Someone walks away from your brand. What do they feel?", opts:[
+            { l:"Understood, cared for", a:{Caregiver:2,Lover:1}, aes:["warm","soft"], w:"being understood" },
+            { l:"Braver, ready to move", a:{Hero:2,Rebel:1}, aes:["bold","dynamic"], w:"new courage" },
+            { l:"Curious, wanting to go deeper", a:{Sage:2,Explorer:1}, aes:["considered","open"], w:"lit curiosity" },
+            { l:"Lighter, smiling", a:{Jester:2,Innocent:1}, aes:["bright","playful"], w:"easy joy" },
+            { l:"Elevated, aspiring to more", a:{Ruler:2,Magician:1}, aes:["luxe","refined"], w:"aspiration" },
+        ]},
       ]},
-    { tag: "Stories & proof", intro: "This is where a brand becomes impossible to copy. Get specific.",
+    { tag: "The world around it", intro: "A couple more, about taste.",
       qs: [
-        { k:"transform", q:"Tell me your best before-and-after — a client's or your own.", ph:"They came to me at ___, and 90 days later…", short:"Names, numbers, the specific moment it turned. Give me one." },
-        { k:"fail", q:"What's a time you failed — and what it taught you?", ph:"The one that stung was…", short:"" },
-        { k:"proud", q:"What's a result or number you're proud of, and the story behind it?", ph:"I'm proud that…", short:"" },
+        { type:"text", k:"muse", q:"Name a person, brand, film, or place whose taste you'd trust completely. What is it about them?", ph:"I'd trust ___ because…", short:"The 'why' matters more than the name — what about their taste?" },
       ]},
-    { tag: "Voice & vibe", intro: "Last stretch — how you actually sound.",
+    { tag: "Who it's for", intro: "Now the person on the other side.",
       qs: [
-        { k:"party", q:"If your brand were a person at a dinner party, how would they talk?", ph:"They'd be the one who…", short:"" },
-        { k:"phrases", q:"What words or phrases do you catch yourself using all the time?", ph:"I always say…", short:"" },
-        { k:"cringe", q:"What overused phrases make you cringe — things you'd never say?", ph:"Please never make me say…", short:"" },
-        { k:"feel", q:"What do you want someone to FEEL after reading your stuff — and do what?", ph:"I want them to feel ___ and then ___.", short:"" },
+        { type:"text", k:"life",   q:"Describe the life your ideal client is reaching for — not their job, their Sunday morning.", ph:"They're reaching for a life where…", short:"Picture one real person. What do they secretly want?" },
+        { type:"text", k:"please", q:"If your brand could give that person one feeling every time — and move them to do one thing — what are they?", ph:"I want them to feel ___ and then ___.", short:"" },
+      ]},
+    { tag: "How it sounds", intro: "Last stretch — your actual voice.",
+      qs: [
+        { type:"text", k:"phrases", q:"What words or phrases do you catch yourself using all the time?", ph:"I always say…", short:"" },
+        { type:"text", k:"never",   q:"And what overused phrases make you cringe — things you'd never say?", ph:"Please never make me say…", short:"" },
       ]},
   ];
 
-  // Flatten
   const FLOW = [];
-  SECTIONS.forEach((s, si) => s.qs.forEach((qq, qi) => FLOW.push(
-    Object.assign({}, qq, { tag: s.tag, intro: qi === 0 ? s.intro : null, si })
+  SECTIONS.forEach((s) => s.qs.forEach((qq, qi) => FLOW.push(
+    Object.assign({}, qq, { tag: s.tag, intro: qi === 0 ? s.intro : null })
   )));
   const TOTAL = FLOW.length;
-  const STORE = "brandInterview.v1";
+  const STORE = "brandDNA.v2";
 
-  // ---- State ---------------------------------------------------------------
+  // ===== State ============================================================
   let idx = 0;
   const answers = {};
+  const scores = {};
+  const aes = {};
+  const world = [];
   let awaitingFollowUp = false;
-  let started = false;
 
   const $ = (id) => document.getElementById(id);
-  const thread = $("thread"), input = $("input"), sendBtn = $("send");
+  const thread = $("thread"), input = $("input"), sendBtn = $("send"), composer = $("composer");
 
-  // ---- Persistence ---------------------------------------------------------
   function persist() {
-    try { localStorage.setItem(STORE, JSON.stringify({ idx, answers })); } catch (e) {}
+    try { localStorage.setItem(STORE, JSON.stringify({ idx, answers, scores, aes, world })); } catch (e) {}
   }
   function loadSaved() {
     try { const r = localStorage.getItem(STORE); return r ? JSON.parse(r) : null; } catch (e) { return null; }
   }
 
-  // ---- Rendering -----------------------------------------------------------
+  // ===== Rendering ========================================================
   function scrollDown() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
-
   function addSectionTag(text) {
-    const el = document.createElement("div");
-    el.className = "section-tag"; el.textContent = text;
-    thread.appendChild(el);
+    const el = document.createElement("div"); el.className = "section-tag"; el.textContent = text; thread.appendChild(el);
   }
   function addRow(who, node) {
     const row = document.createElement("div");
     row.className = "row " + (who === "me" ? "me" : "them");
     const av = document.createElement("div");
-    av.className = "avatar"; av.textContent = who === "me" ? "" : "V";
+    av.className = "avatar"; av.textContent = who === "me" ? "" : "◐";
     if (who === "me") av.style.background = "var(--glow)";
-    const b = document.createElement("div");
-    b.className = "bubble";
+    const b = document.createElement("div"); b.className = "bubble";
     if (typeof node === "string") b.textContent = node; else b.appendChild(node);
-    row.appendChild(av); row.appendChild(b);
-    thread.appendChild(row);
+    row.appendChild(av); row.appendChild(b); thread.appendChild(row);
     return b;
   }
   function typing() {
-    const t = document.createElement("span");
-    t.className = "typing"; t.innerHTML = "<i></i><i></i><i></i>";
+    const t = document.createElement("span"); t.className = "typing"; t.innerHTML = "<i></i><i></i><i></i>";
     return addRow("them", t).parentNode;
   }
-
-  function ask(text, isIntro) {
+  function ask(text) {
     return new Promise((res) => {
       const dots = typing(); scrollDown();
-      const delay = Math.min(1100, 380 + text.length * 7);
-      setTimeout(() => {
-        dots.remove();
-        addRow("them", text);
-        scrollDown(); res();
-      }, delay);
+      const delay = Math.min(1100, 360 + text.length * 6);
+      setTimeout(() => { dots.remove(); addRow("them", text); scrollDown(); res(); }, delay);
     });
   }
-
   function updateProgress() {
-    const done = Math.min(idx, TOTAL);
-    $("barFill").style.width = (done / TOTAL * 100) + "%";
+    $("barFill").style.width = (Math.min(idx, TOTAL) / TOTAL * 100) + "%";
     $("stage").textContent = Math.min(idx + 1, TOTAL) + " / " + TOTAL;
   }
 
-  // ---- Flow ----------------------------------------------------------------
-  const ACKS = ["Love that.", "That's the good stuff.", "Noted — that's a keeper.",
-    "Beautiful.", "Okay, that tells me a lot.", "Yes. Keep that energy.", "That's gold.",
-    "Perfect, thank you.", "Got it.", "Mm — that's real."];
+  const ACKS = ["Love that.", "That's the good stuff.", "Noted — that's a keeper.", "Beautiful.",
+    "Okay, that tells me a lot.", "Yes. Keep that energy.", "That's gold.", "Perfect, thank you.", "Mm — that's real."];
 
+  // ===== Flow =============================================================
   async function present() {
     if (idx >= TOTAL) return finish();
     updateProgress();
     const q = FLOW[idx];
-    if (q.intro) { addSectionTag(q.tag); }
-    await ask(q.q, !!q.intro);
-    input.focus();
+    if (q.intro) addSectionTag(q.tag);
+    await ask(q.q);
+    if (q.type === "choice") { composer.hidden = true; renderChips(q); }
+    else { composer.hidden = false; input.focus(); }
+    scrollDown();
   }
 
-  async function handleSend(text) {
+  function renderChips(q) {
+    const box = document.createElement("div");
+    box.className = "chips"; box.setAttribute("role", "group");
+    q.opts.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.className = "chip"; btn.type = "button"; btn.textContent = opt.l;
+      btn.addEventListener("click", () => chooseChip(q, opt, box, btn));
+      box.appendChild(btn);
+    });
+    thread.appendChild(box); scrollDown();
+  }
+
+  async function chooseChip(q, opt, box, btn) {
+    box.classList.add("done"); btn.classList.add("picked");
+    addRow("me", opt.l);
+    answers[q.k] = opt.l;
+    if (opt.a) for (const k in opt.a) scores[k] = (scores[k] || 0) + opt.a[k];
+    if (opt.aes) opt.aes.forEach((t) => aes[t] = (aes[t] || 0) + 1);
+    if (opt.w) world.push(opt.w);
+    persist();
+    idx++; persist();
+    present();
+  }
+
+  async function handleText(text) {
     text = text.trim();
     const q = FLOW[idx];
     addRow("me", text || "(skipped)");
     input.value = ""; autoGrow(); toggleSend();
-
-    // store
     if (text) answers[q.k] = (answers[q.k] ? answers[q.k] + " " + text : text);
     persist();
 
-    // adaptive follow-up: short, meaningful answer -> one gentle nudge
     if (!awaitingFollowUp && text && text.length < 45 && q.short) {
-      awaitingFollowUp = true;
-      persist();
-      await ask(q.short, false);
-      input.focus();
-      return;
+      awaitingFollowUp = true; persist();
+      await ask(q.short); input.focus(); return;
     }
-
-    awaitingFollowUp = false;
-    idx++; persist();
-
-    if (idx < TOTAL && text) {
-      await ask(ACKS[Math.floor(Math.random() * ACKS.length)], false);
+    awaitingFollowUp = false; idx++; persist();
+    if (idx < TOTAL && text && FLOW[idx].type === "text") {
+      await ask(ACKS[Math.floor(Math.random() * ACKS.length)]);
     }
     present();
   }
 
-  function submit() {
-    const v = input.value.trim();
-    if (!v) return;
-    handleSend(v);
-  }
+  function submit() { const v = input.value.trim(); if (v) handleText(v); }
 
-  // ---- Composer wiring -----------------------------------------------------
   function autoGrow() { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 180) + "px"; }
   function toggleSend() { sendBtn.disabled = input.value.trim().length === 0; }
   input.addEventListener("input", () => { autoGrow(); toggleSend(); });
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); }
-  });
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } });
   sendBtn.addEventListener("click", submit);
-  $("skip").addEventListener("click", () => { awaitingFollowUp = false; handleSend(""); });
+  $("skip").addEventListener("click", () => { awaitingFollowUp = false; handleText(""); });
 
-  // ---- Build the profile ---------------------------------------------------
+  // ===== Inference ========================================================
+  function rankArchetypes() {
+    const arr = Object.keys(scores).map((k) => [k, scores[k]]).sort((a, b) => b[1] - a[1]);
+    return arr;
+  }
+  function topTags(n) {
+    return Object.keys(aes).map((k) => [k, aes[k]]).sort((a, b) => b[1] - a[1]).slice(0, n).map((x) => x[0]);
+  }
+  function uniq(arr) { return arr.filter((v, i) => arr.indexOf(v) === i); }
+
+  // ===== Build the profile ================================================
   function a(k) { return (answers[k] || "").trim(); }
   function line(label, val) { return val ? "- **" + label + ":** " + val + "\n" : ""; }
 
   function buildProfile() {
-    let m = "# Brand Voice Profile\n\n";
-    m += "> Captured through a guided brand interview. This is raw material in your own\n";
-    m += "> words — organized and ready to refine. Paste it ahead of any brief (Scripts,\n";
-    m += "> Reels, or any AI) to generate in your voice.\n\n---\n\n";
+    const ranked = rankArchetypes();
+    const primary = ranked[0] ? ranked[0][0] : "Creator";
+    const secondary = ranked[1] ? ranked[1][0] : "";
+    const tags = topTags(4);
+    const evidence = uniq(world).slice(0, 4);
 
-    m += "## 1. Identity\n";
-    m += line("Who they are", a("who"));
-    m += line("One-line what-they-do", a("do")) + "\n";
+    let m = "# Brand DNA Profile\n\n";
+    m += "> Decoded through a guided interview — the archetype and aesthetic below were\n";
+    m += "> inferred from instinct, never asked outright. Use this as the source of truth\n";
+    m += "> for voice, visuals, and content (Scripts, Reels, or any AI).\n\n---\n\n";
 
-    m += "## 2. The person & their drive\n";
-    m += line("Origin story", a("origin"));
-    m += line("Path here", a("before"));
-    m += line("What they care about", a("care"));
-    m += line("A belief that changed", a("belief"));
-    m += line("A line they won't cross", a("line")) + "\n";
+    m += "## Brand archetype (inferred)\n";
+    m += "**Primary — " + primary + ".** " + ARCH[primary] + "\n\n";
+    if (secondary) m += "**Secondary — " + secondary + ".** " + ARCH[secondary] + "\n\n";
+    if (evidence.length) m += "*Nobody said the word. It surfaced from what you reached for: " + evidence.join(", ") + ".*\n\n";
 
-    m += "## 3. What the brand does & who it serves\n";
-    m += line("The problem, for whom", a("problem"));
-    m += line("Why people choose them", a("choose"));
-    m += line("Ideal person & their pain", a("ideal"));
-    m += line("Their audience's secret fear", a("secret")) + "\n";
+    m += "## Aesthetic direction\n";
+    m += "- **Feel:** " + ARCH_AES[primary] + "\n";
+    if (tags.length) m += "- **Your instincts leaned:** " + tags.join(", ") + "\n";
+    m += line("A taste you trust", a("muse")) + "\n";
 
-    m += "## 4. Positioning & the contrarian angle\n";
-    m += line("The hill they'll die on", a("contrarian")) + "\n";
+    m += "## The brand's world (moodboard in words)\n";
+    m += line("Sound", a("c_sound"));
+    m += line("Space", a("c_place"));
+    m += line("Material", a("c_material"));
+    m += line("Palette", a("c_palette"));
+    m += line("On the shelf", a("c_shelf"));
+    m += line("A day off", a("c_weekend")) + "\n";
 
-    m += "## 5. Signature stories & proof\n";
-    m += line("Best before/after", a("transform"));
-    m += line("A public failure & lesson", a("fail"));
-    m += line("A result they're proud of", a("proud")) + "\n";
+    m += "## Vision & growth\n";
+    m += line("Three years out", a("grow"));
+    m += line("What winning feels like", a("winning")) + "\n";
 
-    m += "## 6. Voice, tone & vibe\n";
-    m += line("How they'd talk at a party", a("party"));
+    m += "## Strength & growth edge\n";
+    m += line("Strongest point", a("proud"));
+    m += line("Where it's still forming", a("fragile")) + "\n";
+
+    m += "## Who it's for\n";
+    m += line("The life they're reaching for", a("life"));
+    m += line("The feeling to give + the move to prompt", a("please")) + "\n";
+
+    m += "## Voice\n";
     m += line("Signature phrases", a("phrases"));
-    m += line("Words / moves to NEVER use", a("cringe"));
-    m += line("Feeling to leave + action to drive", a("feel")) + "\n";
+    m += line("Never say", a("never")) + "\n";
 
-    m += "## 7. Verbatim voiceprint\n";
+    m += "## The person behind it\n";
+    m += line("Who they are", a("who"));
+    m += line("When it became theirs", a("spark"));
+    m += line("A belief that changed", a("belief")) + "\n";
+
+    m += "## Verbatim voiceprint\n";
     m += "*Real lines from the interview — the north star for matching this voice.*\n\n";
-    const picks = ["contrarian","transform","party","care","who"].map(a).filter(Boolean).slice(0,4);
-    picks.forEach(p => { m += "> " + p + "\n\n"; });
+    ["grow", "proud", "please", "who", "winning"].map(a).filter(Boolean).slice(0, 4).forEach((p) => { m += "> " + p + "\n\n"; });
 
     m += "---\n\n### How to apply\n";
-    m += "Prepend to any generation: *\"Write in the voice defined in this profile. Match the\n";
-    m += "rhythm, vocabulary, and formatting. Obey every 'never use' rule.\"*\n";
-    return m;
+    m += "Prepend to any generation: *\"Write and design in the DNA defined here. Lead with the " + primary + " archetype";
+    if (secondary) m += " (with a " + secondary + " undertone)";
+    m += ", match the aesthetic and voice, and obey every 'never say' rule.\"*\n";
+    return { md: m, primary: primary, secondary: secondary, tags: tags };
   }
 
-  function synthPrompt() {
-    let p = "You are a brand strategist. Below is a raw brand interview in my own words. ";
-    p += "Synthesize it into a polished, reusable Brand Voice Profile in Markdown: a one-line ";
-    p += "identity, tone, sentence rhythm, structure (hooks/CTAs), signature vocabulary, a ";
-    p += "strict 'never use' list, formatting habits, point of view, and 3-5 verbatim lines that ";
-    p += "capture my voice. Analyze HOW I write, not just what I say.\n\n=== RAW INTERVIEW ===\n\n";
-    FLOW.forEach(q => { const v = a(q.k); if (v) p += "Q: " + q.q + "\nA: " + v + "\n\n"; });
+  function synthPrompt(primary, secondary) {
+    let p = "You are an elite brand strategist. Below is a discovery interview with a brand owner. ";
+    p += "A projective scoring already inferred a likely PRIMARY archetype of " + primary;
+    if (secondary) p += " and SECONDARY of " + secondary;
+    p += ". Confirm or refine that read, then synthesize a complete Brand DNA document in Markdown: ";
+    p += "(1) archetype with reasoning, (2) brand essence in one line, (3) aesthetic direction — palette mood, ";
+    p += "typography feel, textures/materials, (4) tone & voice with sentence rhythm and a strict 'never say' list, ";
+    p += "(5) the audience and the life they aspire to, (6) strongest point and biggest growth opportunity, ";
+    p += "(7) 3-5 verbatim lines that capture the voice. Analyze HOW they answer, not only what they say.\n\n";
+    p += "=== INTERVIEW ===\n\n";
+    FLOW.forEach((q) => { const v = a(q.k); if (v) p += "Q: " + q.q + "\nA: " + v + "\n\n"; });
     return p;
   }
 
-  // ---- Finish --------------------------------------------------------------
+  // ===== Finish ===========================================================
   function finish() {
     updateProgress();
-    $("composer").hidden = true;
+    composer.hidden = true;
+    const built = buildProfile();
     const card = document.createElement("div");
     card.className = "final";
-    const profile = buildProfile();
+    const tagHtml = built.tags.map((t) => '<span class="tag">' + t + '</span>').join("");
     card.innerHTML =
-      '<h2>Your Brand Voice Profile</h2>' +
-      '<p class="lede">Captured in your own words. Download it, or hand it to Claude for the polished, fully-synthesized version.</p>' +
+      '<h2>Your Brand DNA</h2>' +
+      '<div class="dna">' +
+        '<div class="arch">' + built.primary + ' <small>primary archetype</small></div>' +
+        '<p>' + ARCH[built.primary] + '</p>' +
+        (built.secondary ? '<div class="arch">' + built.secondary + ' <small>secondary</small></div><p>' + ARCH[built.secondary] + '</p>' : '') +
+        '<div class="tags">' + tagHtml + '</div>' +
+      '</div>' +
+      '<p class="lede">Below is your full profile. Download it, or hand it to Claude for the fully-synthesized version.</p>' +
       '<div class="actions">' +
-        '<button class="btn primary" id="dl">Download voice.md</button>' +
+        '<button class="btn primary" id="dl">Download brand-dna.md</button>' +
         '<button class="btn" id="refine">Copy prompt for Claude</button>' +
         '<button class="btn" id="copyMd">Copy profile</button>' +
         '<button class="btn" id="again">Start over</button>' +
       '</div>' +
       '<div class="preview"><pre id="pre"></pre></div>';
     thread.appendChild(card);
-    $("pre").textContent = profile;
+    $("pre").textContent = built.md;
     scrollDown();
     try { localStorage.removeItem(STORE); } catch (e) {}
 
-    $("dl").addEventListener("click", () => downloadMd(profile));
-    $("refine").addEventListener("click", () => copy(synthPrompt(), "Prompt copied — paste it into Claude"));
-    $("copyMd").addEventListener("click", () => copy(profile, "Profile copied"));
+    $("dl").addEventListener("click", () => downloadMd(built.md));
+    $("refine").addEventListener("click", () => copy(synthPrompt(built.primary, built.secondary), "Prompt copied — paste it into Claude"));
+    $("copyMd").addEventListener("click", () => copy(built.md, "Profile copied"));
     $("again").addEventListener("click", () => location.reload());
   }
 
   async function downloadMd(text) {
-    if (!window.claude || !window.claude.downloads) {
-      copy(text, "Downloads unavailable here — copied instead"); return;
-    }
-    try {
-      await window.claude.downloads.save({ filename: "voice.md", data: text });
-      showToast("Saved voice.md");
-    } catch (err) {
-      const code = err && err.code;
-      if (code === "declined") return;
-      copy(text, "Couldn't save — copied to clipboard instead");
-    }
+    if (!window.claude || !window.claude.downloads) { copy(text, "Downloads unavailable here — copied instead"); return; }
+    try { await window.claude.downloads.save({ filename: "brand-dna.md", data: text }); showToast("Saved brand-dna.md"); }
+    catch (err) { if (err && err.code === "declined") return; copy(text, "Couldn't save — copied instead"); }
   }
-
   function copy(text, msg) {
     const done = () => showToast(msg);
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
-    } else fallbackCopy(text, done);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+    else fallbackCopy(text, done);
   }
   function fallbackCopy(text, done) {
-    const ta = document.createElement("textarea"); ta.value = text;
-    ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta);
-    ta.select(); try { document.execCommand("copy"); } catch (e) {}
-    ta.remove(); done();
+    const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} ta.remove(); done();
   }
   let toastT;
-  function showToast(msg) {
-    const t = $("toast"); t.textContent = msg; t.classList.add("show");
-    clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200);
-  }
+  function showToast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200); }
 
-  // ---- Start / resume ------------------------------------------------------
+  // ===== Start / resume ===================================================
   function begin(resume) {
-    started = true;
     $("progress").hidden = false;
-    $("composer").hidden = false;
-    if (resume) {
-      // replay a compact summary rather than every bubble
-      addSectionTag("Resumed");
-      addRow("them", "Welcome back — picking up where we left off.");
-    } else {
-      addRow("them", "Hey — I'm your interviewer. I'll ask a handful of questions about you and your brand. There are no wrong answers; the specific and honest ones are the best. Ready when you are.");
-    }
+    if (resume) { addSectionTag("Resumed"); addRow("them", "Welcome back — picking up where we left off."); }
+    else { addRow("them", "Hey — I'm here to decode your brand's DNA. I'll ask a handful of questions; some you'll answer in your own words, some are just quick taps. No wrong answers — the honest, specific ones are the best. Ready?"); }
     present();
   }
 
@@ -502,19 +594,16 @@
   if (saved && saved.idx > 0 && saved.idx < TOTAL) {
     $("resumeBar").hidden = false;
     $("resumeBtn").addEventListener("click", () => {
-      idx = saved.idx; Object.assign(answers, saved.answers || {});
+      idx = saved.idx; Object.assign(answers, saved.answers || {}); Object.assign(scores, saved.scores || {});
+      Object.assign(aes, saved.aes || {}); (saved.world || []).forEach((w) => world.push(w));
       $("resumeBar").hidden = true; begin(true);
     });
-    $("freshBtn").addEventListener("click", () => {
-      try { localStorage.removeItem(STORE); } catch (e) {}
-      $("resumeBar").hidden = true; begin(false);
-    });
+    $("freshBtn").addEventListener("click", () => { try { localStorage.removeItem(STORE); } catch (e) {} $("resumeBar").hidden = true; begin(false); });
   } else {
-    // auto-start after a beat
     setTimeout(() => begin(false), 500);
   }
 
-  // ---- Ambient waveform (respects reduced motion) --------------------------
+  // ===== Ambient waveform =================================================
   (function waveform() {
     const c = $("wave"); if (!c) return;
     const ctx = c.getContext("2d");
@@ -522,17 +611,13 @@
     const N = 18, dpr = window.devicePixelRatio || 1;
     c.width = 128 * dpr; c.height = 40 * dpr; ctx.scale(dpr, dpr);
     const seeds = Array.from({ length: N }, (_, i) => Math.random() * Math.PI * 2 + i);
-    function accent() {
-      return getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#1E6E68";
-    }
+    const accent = () => getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#1E6E68";
     function draw(t) {
-      ctx.clearRect(0, 0, 128, 40);
-      ctx.fillStyle = accent();
+      ctx.clearRect(0, 0, 128, 40); ctx.fillStyle = accent();
       const bw = 3, gap = (128 - N * bw) / (N - 1);
       for (let i = 0; i < N; i++) {
         const base = reduce ? 0.5 : (Math.sin(t / 520 + seeds[i]) * 0.5 + 0.5);
-        const h = 4 + base * 30;
-        const x = i * (bw + gap), y = (40 - h) / 2;
+        const h = 4 + base * 30, x = i * (bw + gap), y = (40 - h) / 2;
         ctx.globalAlpha = 0.4 + base * 0.6;
         ctx.beginPath();
         if (ctx.roundRect) ctx.roundRect(x, y, bw, h, 1.5); else ctx.rect(x, y, bw, h);
