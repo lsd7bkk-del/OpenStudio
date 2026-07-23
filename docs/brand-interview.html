@@ -1,0 +1,546 @@
+<title>The Brand Voice Interview</title>
+<style>
+  :root {
+    --ground: #F4F3EF;
+    --surface: #FFFFFF;
+    --surface-2: #EFEEE8;
+    --ink: #1B1D1C;
+    --muted: #6C6F6A;
+    --line: #E2E1DA;
+    --accent: #1E6E68;
+    --accent-soft: #d7e7e5;
+    --glow: #C98A2E;
+    --shadow: 0 1px 2px rgba(20,25,22,.04), 0 8px 24px rgba(20,25,22,.06);
+    --radius: 16px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #131513; --surface: #1B1E1B; --surface-2: #22261F;
+      --ink: #EAEAE3; --muted: #969990; --line: #2A2E2A;
+      --accent: #54B7AD; --accent-soft: #1c2f2c; --glow: #E0AE52;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #131513; --surface: #1B1E1B; --surface-2: #22261F;
+    --ink: #EAEAE3; --muted: #969990; --line: #2A2E2A;
+    --accent: #54B7AD; --accent-soft: #1c2f2c; --glow: #E0AE52;
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"] {
+    --ground: #F4F3EF; --surface: #FFFFFF; --surface-2: #EFEEE8;
+    --ink: #1B1D1C; --muted: #6C6F6A; --line: #E2E1DA;
+    --accent: #1E6E68; --accent-soft: #d7e7e5; --glow: #C98A2E;
+    --shadow: 0 1px 2px rgba(20,25,22,.04), 0 8px 24px rgba(20,25,22,.06);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 140px; }
+
+  /* Header */
+  header { padding: 40px 0 8px; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 10px;
+  }
+  .wave { display: block; width: 64px; height: 20px; }
+  h1 {
+    font-family: var(--serif); font-weight: 600; text-wrap: balance;
+    font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: -.01em;
+    margin: 14px 0 10px;
+  }
+  .sub { color: var(--muted); font-size: 17px; max-width: 46ch; margin: 0; }
+
+  /* Progress */
+  .progress { position: sticky; top: 0; z-index: 5; padding: 14px 0 12px;
+    background: linear-gradient(var(--ground) 72%, transparent);
+    display: flex; align-items: center; gap: 12px; }
+  .bar { flex: 1; height: 5px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent);
+    border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
+  .stage { font-size: 12px; color: var(--muted); white-space: nowrap;
+    font-variant-numeric: tabular-nums; }
+
+  /* Chat */
+  .thread { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+  .row { display: flex; gap: 12px; max-width: 100%; animation: rise .45s cubic-bezier(.22,1,.36,1) both; }
+  .row.me { flex-direction: row-reverse; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  @media (prefers-reduced-motion: reduce) { .row { animation: none; } }
+  .avatar {
+    flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); color: #fff; display: grid; place-items: center;
+    font-family: var(--serif); font-size: 16px; font-weight: 600; margin-top: 2px;
+    box-shadow: var(--shadow);
+  }
+  :root[data-theme="dark"] .avatar, .avatar { color: #06110f; }
+  .bubble {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 13px 16px; box-shadow: var(--shadow); font-size: 16px;
+    border-top-left-radius: 4px;
+  }
+  .me .bubble { background: var(--accent-soft); border-color: transparent; border-top-left-radius: 14px; border-top-right-radius: 4px; }
+  .section-tag { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--glow); font-weight: 700; margin: 20px 0 -4px 46px; }
+  .typing { display: inline-flex; gap: 4px; padding: 4px 2px; }
+  .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
+    animation: blink 1.2s infinite; }
+  .typing i:nth-child(2){ animation-delay:.2s } .typing i:nth-child(3){ animation-delay:.4s }
+  @keyframes blink { 0%,60%,100%{ opacity:.25; transform: translateY(0) } 30%{ opacity:1; transform: translateY(-3px) } }
+
+  /* Composer */
+  .composer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: linear-gradient(transparent, var(--ground) 30%); padding: 20px; }
+  .composer-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 10px;
+    align-items: flex-end; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; padding: 10px 10px 10px 16px; box-shadow: var(--shadow); }
+  textarea {
+    flex: 1; border: 0; resize: none; background: transparent; color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.5; max-height: 180px;
+    padding: 6px 0; outline: none;
+  }
+  textarea::placeholder { color: var(--muted); }
+  .send {
+    flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px; border: 0;
+    background: var(--accent); color: #fff; cursor: pointer; display: grid; place-items: center;
+    transition: transform .12s, opacity .2s;
+  }
+  :root[data-theme="dark"] .send { color: #06110f; }
+  .send:hover { transform: translateY(-1px); }
+  .send:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+  .send svg { width: 20px; height: 20px; }
+  .hint { max-width: 720px; margin: 8px auto 0; font-size: 12px; color: var(--muted);
+    display: flex; justify-content: space-between; padding: 0 6px; }
+  .skip { background: none; border: 0; color: var(--muted); cursor: pointer;
+    font-size: 12px; text-decoration: underline; padding: 0; }
+  .skip:hover { color: var(--accent); }
+
+  /* End card */
+  .final { margin-top: 26px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .final h2 { font-family: var(--serif); font-size: 26px; margin: 0; padding: 22px 22px 4px; }
+  .final p.lede { color: var(--muted); margin: 0; padding: 0 22px 16px; font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 22px 20px; }
+  .btn { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+    padding: 11px 16px; border-radius: 11px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: var(--sans); transition: transform .12s, border-color .2s; }
+  .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
+  :root[data-theme="dark"] .btn.primary { color: #06110f; }
+  .preview { border-top: 1px solid var(--line); background: var(--surface-2);
+    max-height: 340px; overflow: auto; }
+  .preview pre { margin: 0; padding: 20px 22px; font-family: var(--mono); font-size: 12.5px;
+    line-height: 1.7; white-space: pre-wrap; word-break: break-word; color: var(--ink); }
+  .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--ground); padding: 10px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; opacity: 0; transition: all .3s; pointer-events: none; z-index: 20; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .resume { display:flex; gap:10px; align-items:center; justify-content:center;
+    margin-top:14px; font-size:13px; color:var(--muted); }
+  .resume button { font-size:13px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">
+      Brand voice studio
+      <canvas class="wave" id="wave" width="128" height="40" aria-hidden="true"></canvas>
+    </div>
+    <h1 id="title">Let's find your voice.</h1>
+    <p class="sub" id="sub">A short interview about you and your brand. Answer like you're
+      talking to a friend who's genuinely curious — the specific, honest, slightly messy
+      answers are the ones worth gold. About 20 minutes.</p>
+    <div class="resume" id="resumeBar" hidden>
+      <span>Found a saved session.</span>
+      <button class="btn" id="resumeBtn">Resume</button>
+      <button class="skip" id="freshBtn">Start over</button>
+    </div>
+  </header>
+
+  <div class="progress" id="progress" hidden>
+    <div class="bar"><i id="barFill"></i></div>
+    <span class="stage" id="stage">1 / 20</span>
+  </div>
+
+  <div class="thread" id="thread"></div>
+</div>
+
+<div class="composer" id="composer" hidden>
+  <div class="composer-inner">
+    <textarea id="input" rows="1" placeholder="Type your answer…" aria-label="Your answer"></textarea>
+    <button class="send" id="send" aria-label="Send" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+  <div class="hint">
+    <span>Press Enter to send · Shift+Enter for a new line</span>
+    <button class="skip" id="skip">Skip this one</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- The interview -------------------------------------------------------
+  const SECTIONS = [
+    { tag: "The person", intro: "First, you — the human behind the brand. Forget the pitch for a minute.",
+      qs: [
+        { k:"who", q:"Who are you, in your own words — not your job title?", ph:"I'm the kind of person who…", short:"Go past the label — what actually makes you, you?" },
+        { k:"origin", q:"Where did this work start for you? Tell me the origin story.", ph:"It really began when…", short:"Take me to the moment it clicked. A place, a year, a feeling." },
+        { k:"before", q:"What did you do before this — and what carried over?", ph:"Before this I…", short:"" },
+      ]},
+    { tag: "Values & drive", intro: "Now the fuel. What's actually under the hood.",
+      qs: [
+        { k:"care", q:"What do you genuinely care about — the thing that gets you out of bed?", ph:"What I care about most is…", short:"Say it plainly, no mission-statement voice." },
+        { k:"belief", q:"What's a belief you hold now that you'd have argued against 5 years ago?", ph:"I used to think… now I know…", short:"" },
+        { k:"line", q:"What's a line you won't cross — even for money or reach?", ph:"I'd never…", short:"" },
+      ]},
+    { tag: "The brand", intro: "Let's talk about the actual work.",
+      qs: [
+        { k:"do", q:"In one sentence, what do you do — explained to a smart 12-year-old?", ph:"I help ___ do ___ so they can ___.", short:"Keep it concrete — a kid should picture it." },
+        { k:"problem", q:"What problem do you solve, and for whom, specifically?", ph:"I solve ___ for people who ___.", short:"Name the exact person and the exact pain." },
+        { k:"choose", q:"Why do people choose you over the obvious alternative?", ph:"People pick me because…", short:"" },
+      ]},
+    { tag: "Audience & angle", intro: "Who you're for — and the thing you're willing to fight about.",
+      qs: [
+        { k:"ideal", q:"Describe your ideal person — not their age, their situation and their pain.", ph:"They're someone who's stuck on…", short:"Picture one real person you've helped. Describe them." },
+        { k:"secret", q:"What does your audience secretly believe or fear that nobody says out loud?", ph:"Deep down they're afraid that…", short:"" },
+        { k:"contrarian", q:"What's your contrarian take — the hill you'll die on?", ph:"Everyone says ___, but actually ___.", short:"What does your whole industry get wrong?" },
+      ]},
+    { tag: "Stories & proof", intro: "This is where a brand becomes impossible to copy. Get specific.",
+      qs: [
+        { k:"transform", q:"Tell me your best before-and-after — a client's or your own.", ph:"They came to me at ___, and 90 days later…", short:"Names, numbers, the specific moment it turned. Give me one." },
+        { k:"fail", q:"What's a time you failed — and what it taught you?", ph:"The one that stung was…", short:"" },
+        { k:"proud", q:"What's a result or number you're proud of, and the story behind it?", ph:"I'm proud that…", short:"" },
+      ]},
+    { tag: "Voice & vibe", intro: "Last stretch — how you actually sound.",
+      qs: [
+        { k:"party", q:"If your brand were a person at a dinner party, how would they talk?", ph:"They'd be the one who…", short:"" },
+        { k:"phrases", q:"What words or phrases do you catch yourself using all the time?", ph:"I always say…", short:"" },
+        { k:"cringe", q:"What overused phrases make you cringe — things you'd never say?", ph:"Please never make me say…", short:"" },
+        { k:"feel", q:"What do you want someone to FEEL after reading your stuff — and do what?", ph:"I want them to feel ___ and then ___.", short:"" },
+      ]},
+  ];
+
+  // Flatten
+  const FLOW = [];
+  SECTIONS.forEach((s, si) => s.qs.forEach((qq, qi) => FLOW.push(
+    Object.assign({}, qq, { tag: s.tag, intro: qi === 0 ? s.intro : null, si })
+  )));
+  const TOTAL = FLOW.length;
+  const STORE = "brandInterview.v1";
+
+  // ---- State ---------------------------------------------------------------
+  let idx = 0;
+  const answers = {};
+  let awaitingFollowUp = false;
+  let started = false;
+
+  const $ = (id) => document.getElementById(id);
+  const thread = $("thread"), input = $("input"), sendBtn = $("send");
+
+  // ---- Persistence ---------------------------------------------------------
+  function persist() {
+    try { localStorage.setItem(STORE, JSON.stringify({ idx, answers })); } catch (e) {}
+  }
+  function loadSaved() {
+    try { const r = localStorage.getItem(STORE); return r ? JSON.parse(r) : null; } catch (e) { return null; }
+  }
+
+  // ---- Rendering -----------------------------------------------------------
+  function scrollDown() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
+
+  function addSectionTag(text) {
+    const el = document.createElement("div");
+    el.className = "section-tag"; el.textContent = text;
+    thread.appendChild(el);
+  }
+  function addRow(who, node) {
+    const row = document.createElement("div");
+    row.className = "row " + (who === "me" ? "me" : "them");
+    const av = document.createElement("div");
+    av.className = "avatar"; av.textContent = who === "me" ? "" : "V";
+    if (who === "me") av.style.background = "var(--glow)";
+    const b = document.createElement("div");
+    b.className = "bubble";
+    if (typeof node === "string") b.textContent = node; else b.appendChild(node);
+    row.appendChild(av); row.appendChild(b);
+    thread.appendChild(row);
+    return b;
+  }
+  function typing() {
+    const t = document.createElement("span");
+    t.className = "typing"; t.innerHTML = "<i></i><i></i><i></i>";
+    return addRow("them", t).parentNode;
+  }
+
+  function ask(text, isIntro) {
+    return new Promise((res) => {
+      const dots = typing(); scrollDown();
+      const delay = Math.min(1100, 380 + text.length * 7);
+      setTimeout(() => {
+        dots.remove();
+        addRow("them", text);
+        scrollDown(); res();
+      }, delay);
+    });
+  }
+
+  function updateProgress() {
+    const done = Math.min(idx, TOTAL);
+    $("barFill").style.width = (done / TOTAL * 100) + "%";
+    $("stage").textContent = Math.min(idx + 1, TOTAL) + " / " + TOTAL;
+  }
+
+  // ---- Flow ----------------------------------------------------------------
+  const ACKS = ["Love that.", "That's the good stuff.", "Noted — that's a keeper.",
+    "Beautiful.", "Okay, that tells me a lot.", "Yes. Keep that energy.", "That's gold.",
+    "Perfect, thank you.", "Got it.", "Mm — that's real."];
+
+  async function present() {
+    if (idx >= TOTAL) return finish();
+    updateProgress();
+    const q = FLOW[idx];
+    if (q.intro) { addSectionTag(q.tag); }
+    await ask(q.q, !!q.intro);
+    input.focus();
+  }
+
+  async function handleSend(text) {
+    text = text.trim();
+    const q = FLOW[idx];
+    addRow("me", text || "(skipped)");
+    input.value = ""; autoGrow(); toggleSend();
+
+    // store
+    if (text) answers[q.k] = (answers[q.k] ? answers[q.k] + " " + text : text);
+    persist();
+
+    // adaptive follow-up: short, meaningful answer -> one gentle nudge
+    if (!awaitingFollowUp && text && text.length < 45 && q.short) {
+      awaitingFollowUp = true;
+      persist();
+      await ask(q.short, false);
+      input.focus();
+      return;
+    }
+
+    awaitingFollowUp = false;
+    idx++; persist();
+
+    if (idx < TOTAL && text) {
+      await ask(ACKS[Math.floor(Math.random() * ACKS.length)], false);
+    }
+    present();
+  }
+
+  function submit() {
+    const v = input.value.trim();
+    if (!v) return;
+    handleSend(v);
+  }
+
+  // ---- Composer wiring -----------------------------------------------------
+  function autoGrow() { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 180) + "px"; }
+  function toggleSend() { sendBtn.disabled = input.value.trim().length === 0; }
+  input.addEventListener("input", () => { autoGrow(); toggleSend(); });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); }
+  });
+  sendBtn.addEventListener("click", submit);
+  $("skip").addEventListener("click", () => { awaitingFollowUp = false; handleSend(""); });
+
+  // ---- Build the profile ---------------------------------------------------
+  function a(k) { return (answers[k] || "").trim(); }
+  function line(label, val) { return val ? "- **" + label + ":** " + val + "\n" : ""; }
+
+  function buildProfile() {
+    let m = "# Brand Voice Profile\n\n";
+    m += "> Captured through a guided brand interview. This is raw material in your own\n";
+    m += "> words — organized and ready to refine. Paste it ahead of any brief (Scripts,\n";
+    m += "> Reels, or any AI) to generate in your voice.\n\n---\n\n";
+
+    m += "## 1. Identity\n";
+    m += line("Who they are", a("who"));
+    m += line("One-line what-they-do", a("do")) + "\n";
+
+    m += "## 2. The person & their drive\n";
+    m += line("Origin story", a("origin"));
+    m += line("Path here", a("before"));
+    m += line("What they care about", a("care"));
+    m += line("A belief that changed", a("belief"));
+    m += line("A line they won't cross", a("line")) + "\n";
+
+    m += "## 3. What the brand does & who it serves\n";
+    m += line("The problem, for whom", a("problem"));
+    m += line("Why people choose them", a("choose"));
+    m += line("Ideal person & their pain", a("ideal"));
+    m += line("Their audience's secret fear", a("secret")) + "\n";
+
+    m += "## 4. Positioning & the contrarian angle\n";
+    m += line("The hill they'll die on", a("contrarian")) + "\n";
+
+    m += "## 5. Signature stories & proof\n";
+    m += line("Best before/after", a("transform"));
+    m += line("A public failure & lesson", a("fail"));
+    m += line("A result they're proud of", a("proud")) + "\n";
+
+    m += "## 6. Voice, tone & vibe\n";
+    m += line("How they'd talk at a party", a("party"));
+    m += line("Signature phrases", a("phrases"));
+    m += line("Words / moves to NEVER use", a("cringe"));
+    m += line("Feeling to leave + action to drive", a("feel")) + "\n";
+
+    m += "## 7. Verbatim voiceprint\n";
+    m += "*Real lines from the interview — the north star for matching this voice.*\n\n";
+    const picks = ["contrarian","transform","party","care","who"].map(a).filter(Boolean).slice(0,4);
+    picks.forEach(p => { m += "> " + p + "\n\n"; });
+
+    m += "---\n\n### How to apply\n";
+    m += "Prepend to any generation: *\"Write in the voice defined in this profile. Match the\n";
+    m += "rhythm, vocabulary, and formatting. Obey every 'never use' rule.\"*\n";
+    return m;
+  }
+
+  function synthPrompt() {
+    let p = "You are a brand strategist. Below is a raw brand interview in my own words. ";
+    p += "Synthesize it into a polished, reusable Brand Voice Profile in Markdown: a one-line ";
+    p += "identity, tone, sentence rhythm, structure (hooks/CTAs), signature vocabulary, a ";
+    p += "strict 'never use' list, formatting habits, point of view, and 3-5 verbatim lines that ";
+    p += "capture my voice. Analyze HOW I write, not just what I say.\n\n=== RAW INTERVIEW ===\n\n";
+    FLOW.forEach(q => { const v = a(q.k); if (v) p += "Q: " + q.q + "\nA: " + v + "\n\n"; });
+    return p;
+  }
+
+  // ---- Finish --------------------------------------------------------------
+  function finish() {
+    updateProgress();
+    $("composer").hidden = true;
+    const card = document.createElement("div");
+    card.className = "final";
+    const profile = buildProfile();
+    card.innerHTML =
+      '<h2>Your Brand Voice Profile</h2>' +
+      '<p class="lede">Captured in your own words. Download it, or hand it to Claude for the polished, fully-synthesized version.</p>' +
+      '<div class="actions">' +
+        '<button class="btn primary" id="dl">Download voice.md</button>' +
+        '<button class="btn" id="refine">Copy prompt for Claude</button>' +
+        '<button class="btn" id="copyMd">Copy profile</button>' +
+        '<button class="btn" id="again">Start over</button>' +
+      '</div>' +
+      '<div class="preview"><pre id="pre"></pre></div>';
+    thread.appendChild(card);
+    $("pre").textContent = profile;
+    scrollDown();
+    try { localStorage.removeItem(STORE); } catch (e) {}
+
+    $("dl").addEventListener("click", () => downloadMd(profile));
+    $("refine").addEventListener("click", () => copy(synthPrompt(), "Prompt copied — paste it into Claude"));
+    $("copyMd").addEventListener("click", () => copy(profile, "Profile copied"));
+    $("again").addEventListener("click", () => location.reload());
+  }
+
+  async function downloadMd(text) {
+    if (!window.claude || !window.claude.downloads) {
+      copy(text, "Downloads unavailable here — copied instead"); return;
+    }
+    try {
+      await window.claude.downloads.save({ filename: "voice.md", data: text });
+      showToast("Saved voice.md");
+    } catch (err) {
+      const code = err && err.code;
+      if (code === "declined") return;
+      copy(text, "Couldn't save — copied to clipboard instead");
+    }
+  }
+
+  function copy(text, msg) {
+    const done = () => showToast(msg);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+    } else fallbackCopy(text, done);
+  }
+  function fallbackCopy(text, done) {
+    const ta = document.createElement("textarea"); ta.value = text;
+    ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta);
+    ta.select(); try { document.execCommand("copy"); } catch (e) {}
+    ta.remove(); done();
+  }
+  let toastT;
+  function showToast(msg) {
+    const t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  // ---- Start / resume ------------------------------------------------------
+  function begin(resume) {
+    started = true;
+    $("progress").hidden = false;
+    $("composer").hidden = false;
+    if (resume) {
+      // replay a compact summary rather than every bubble
+      addSectionTag("Resumed");
+      addRow("them", "Welcome back — picking up where we left off.");
+    } else {
+      addRow("them", "Hey — I'm your interviewer. I'll ask a handful of questions about you and your brand. There are no wrong answers; the specific and honest ones are the best. Ready when you are.");
+    }
+    present();
+  }
+
+  const saved = loadSaved();
+  if (saved && saved.idx > 0 && saved.idx < TOTAL) {
+    $("resumeBar").hidden = false;
+    $("resumeBtn").addEventListener("click", () => {
+      idx = saved.idx; Object.assign(answers, saved.answers || {});
+      $("resumeBar").hidden = true; begin(true);
+    });
+    $("freshBtn").addEventListener("click", () => {
+      try { localStorage.removeItem(STORE); } catch (e) {}
+      $("resumeBar").hidden = true; begin(false);
+    });
+  } else {
+    // auto-start after a beat
+    setTimeout(() => begin(false), 500);
+  }
+
+  // ---- Ambient waveform (respects reduced motion) --------------------------
+  (function waveform() {
+    const c = $("wave"); if (!c) return;
+    const ctx = c.getContext("2d");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const N = 18, dpr = window.devicePixelRatio || 1;
+    c.width = 128 * dpr; c.height = 40 * dpr; ctx.scale(dpr, dpr);
+    const seeds = Array.from({ length: N }, (_, i) => Math.random() * Math.PI * 2 + i);
+    function accent() {
+      return getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#1E6E68";
+    }
+    function draw(t) {
+      ctx.clearRect(0, 0, 128, 40);
+      ctx.fillStyle = accent();
+      const bw = 3, gap = (128 - N * bw) / (N - 1);
+      for (let i = 0; i < N; i++) {
+        const base = reduce ? 0.5 : (Math.sin(t / 520 + seeds[i]) * 0.5 + 0.5);
+        const h = 4 + base * 30;
+        const x = i * (bw + gap), y = (40 - h) / 2;
+        ctx.globalAlpha = 0.4 + base * 0.6;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(x, y, bw, h, 1.5); else ctx.rect(x, y, bw, h);
+        ctx.fill();
+      }
+      if (!reduce) requestAnimationFrame(draw);
+    }
+    if (reduce) draw(0); else requestAnimationFrame(draw);
+  })();
+})();
+</script>
