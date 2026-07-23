@@ -1,4 +1,4 @@
-<title>Brand DNA Interview</title>
+<title>Let's just talk</title>
 <style>
   :root {
     --ground: #F4F3EF;
@@ -150,13 +150,14 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">
-      Brand DNA studio
+      no forms · no agenda
       <canvas class="wave" id="wave" width="128" height="40" aria-hidden="true"></canvas>
     </div>
-    <h1 id="title">Let's decode your brand's DNA.</h1>
-    <p class="sub">A short, conversational interview. Some questions you'll answer in your
-      own words; others are quick instincts — just tap what feels true. By the end we'll have
-      surfaced your brand's archetype, its aesthetic, and the world it lives in. About 15–20 minutes.</p>
+    <h1 id="title">Hey — let's just talk.</h1>
+    <p class="sub">A mutual friend said I had to meet you. No pitch, no questionnaire — I just
+      want to get to know you and the thing you're building. Some quick, some deeper. Just say
+      whatever's actually true — the honest, unpolished version always beats the tidy one.
+      Fifteen minutes, tops.</p>
     <div class="resume" id="resumeBar" hidden>
       <span>Found a saved session.</span>
       <button class="btn" id="resumeBtn">Resume</button>
@@ -166,7 +167,7 @@
 
   <div class="progress" id="progress" hidden>
     <div class="bar"><i id="barFill"></i></div>
-    <span class="stage" id="stage">1 / 20</span>
+    <span class="stage" id="stage" hidden></span>
   </div>
 
   <div class="thread" id="thread"></div>
@@ -224,26 +225,26 @@
   // ===== The interview ====================================================
   // type: "text" -> free response ; "choice" -> projective tap (scores archetypes)
   const SECTIONS = [
-    { tag: "The person", intro: "First — you, the human behind it. Forget the pitch for a minute.",
+    { tag: "", intro: null,
       qs: [
-        { type:"text", k:"who",   q:"Who are you, in your own words — not your job title?", ph:"I'm the kind of person who…", short:"Go past the label. What actually makes you, you?" },
-        { type:"text", k:"spark", q:"When did this stop being a job and start feeling like yours?", ph:"It really became mine when…", short:"Take me to the moment. A place, a year, a feeling." },
-        { type:"text", k:"belief",q:"What's something you believe now that you'd have argued against 5 years ago?", ph:"I used to think… now I know…", short:"" },
+        { type:"text", k:"who",   q:"So, first off — who are you? Not the job title, the actual you.", ph:"I'm the kind of person who…", short:"Ha — that's the bio version. Who are you really?" },
+        { type:"text", k:"spark", q:"When did this thing you're building stop feeling like a job and start feeling like yours?", ph:"It really became mine when…", short:"Take me there — a moment, a place, a year." },
+        { type:"text", k:"belief",q:"What's something you're sure about now that past-you would've argued with?", ph:"I used to think… now I know…", short:"" },
       ]},
-    { tag: "The brand, honestly", intro: "Now the work — the good and the unfinished.",
+    { tag: "", intro: null,
       qs: [
-        { type:"text", k:"do",      q:"In one sentence, what do you do — told to a smart 12-year-old?", ph:"I help ___ do ___ so they can ___.", short:"Keep it concrete — a kid should picture it." },
-        { type:"text", k:"proud",   q:"What part of your brand are you quietly proudest of — the thing that's genuinely strong?", ph:"What I'm proudest of is…", short:"Name the specific strength, not a nice-sounding one." },
-        { type:"text", k:"fragile", q:"And what part still feels unfinished, or quietly keeps you up at night?", ph:"The part I'm still figuring out is…", short:"Be honest — this is where the growth is." },
+        { type:"text", k:"do",      q:"When someone you respect asks what you actually do — and you can tell they really want to know — how do you put it?", ph:"I'd tell them…", short:"That's the elevator version. Say it like you'd say it to a friend." },
+        { type:"text", k:"proud",   q:"What's the part of what you've built that you'd quietly back yourself on — no matter who's in the room?", ph:"The part I'd stand behind is…", short:"Get specific — the real one, not the humble-brag." },
+        { type:"text", k:"fragile", q:"And honestly — what's the part that still isn't where you want it? The bit you'd rather people didn't poke at yet.", ph:"The part I'm still figuring out is…", short:"No judgment. This is usually where the interesting stuff is." },
       ]},
-    { tag: "Where it's going", intro: "Look up for a second.",
+    { tag: "", intro: null,
       qs: [
-        { type:"text", k:"grow",    q:"Picture your brand three years out, thriving. What's different? What does it look and feel like?", ph:"In three years…", short:"Paint it — scale, feeling, the day-to-day." },
-        { type:"text", k:"winning", q:"Beyond money — what would make you feel it truly won?", ph:"I'd feel it won if…", short:"" },
+        { type:"text", k:"grow",    q:"Picture this thing a few years out, really working. What's different — how does a normal day feel?", ph:"A few years out…", short:"Paint it for me — the scale, the feeling, the day-to-day." },
+        { type:"text", k:"winning", q:"Forget the money for a sec — what would actually make you feel like it won?", ph:"I'd feel it won if…", short:"" },
       ]},
-    { tag: "Quick instincts", intro: "Now just go with your gut — tap whatever feels most like your brand. No overthinking.",
+    { tag: "", intro: null,
       qs: [
-        { type:"choice", k:"c_gather", q:"Your brand hosts a gathering. What's the vibe?", opts:[
+        { type:"choice", k:"c_gather", q:"Okay, switching gears — quick gut stuff, don't overthink these. Say you throw a gathering. What's it like?", opts:[
             { l:"An intimate candlelit dinner, real conversation", a:{Lover:2,Sage:1}, aes:["warm","intimate"], w:"candlelit dinners" },
             { l:"A big open table — everyone's welcome", a:{Everyman:2,Caregiver:1}, aes:["warm","honest"], w:"open tables" },
             { l:"A rooftop launch, bold and buzzing", a:{Ruler:2,Magician:1}, aes:["bold","luxe"], w:"rooftop launches" },
@@ -300,19 +301,19 @@
             { l:"Elevated, aspiring to more", a:{Ruler:2,Magician:1}, aes:["luxe","refined"], w:"aspiration" },
         ]},
       ]},
-    { tag: "The world around it", intro: "A couple more, about taste.",
+    { tag: "", intro: null,
       qs: [
-        { type:"text", k:"muse", q:"Name a person, brand, film, or place whose taste you'd trust completely. What is it about them?", ph:"I'd trust ___ because…", short:"The 'why' matters more than the name — what about their taste?" },
+        { type:"text", k:"muse", q:"Whose taste do you just… trust? A person, a brand, a film, a place — and what is it about them?", ph:"I'd trust ___ because…", short:"The 'why' is the good part — what about their taste gets you?" },
       ]},
-    { tag: "Who it's for", intro: "Now the person on the other side.",
+    { tag: "", intro: null,
       qs: [
-        { type:"text", k:"life",   q:"Describe the life your ideal client is reaching for — not their job, their Sunday morning.", ph:"They're reaching for a life where…", short:"Picture one real person. What do they secretly want?" },
-        { type:"text", k:"please", q:"If your brand could give that person one feeling every time — and move them to do one thing — what are they?", ph:"I want them to feel ___ and then ___.", short:"" },
+        { type:"text", k:"life",   q:"Think about the people you do this for. What's the life they're actually reaching for — not their job, their Sunday morning?", ph:"They're reaching for a life where…", short:"Picture one real person you know. What do they secretly want?" },
+        { type:"text", k:"please", q:"When they run into what you do, what do you want them to walk away feeling — and then go do?", ph:"I'd want them to feel ___ and then ___.", short:"" },
       ]},
-    { tag: "How it sounds", intro: "Last stretch — your actual voice.",
+    { tag: "", intro: null,
       qs: [
-        { type:"text", k:"phrases", q:"What words or phrases do you catch yourself using all the time?", ph:"I always say…", short:"" },
-        { type:"text", k:"never",   q:"And what overused phrases make you cringe — things you'd never say?", ph:"Please never make me say…", short:"" },
+        { type:"text", k:"phrases", q:"What are the words or little phrases you catch yourself saying all the time?", ph:"I always say…", short:"" },
+        { type:"text", k:"never",   q:"And the flip side — what's the kind of thing people in your world post or say that makes you quietly cringe? The stuff you'd never let your name near.", ph:"I'd never…", short:"" },
       ]},
   ];
 
@@ -343,9 +344,7 @@
 
   // ===== Rendering ========================================================
   function scrollDown() { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }
-  function addSectionTag(text) {
-    const el = document.createElement("div"); el.className = "section-tag"; el.textContent = text; thread.appendChild(el);
-  }
+  function addSectionTag(text) { /* intentionally silent — this reads as one continuous conversation, not sections */ }
   function addRow(who, node) {
     const row = document.createElement("div");
     row.className = "row " + (who === "me" ? "me" : "them");
@@ -539,14 +538,14 @@
     card.className = "final";
     const tagHtml = built.tags.map((t) => '<span class="tag">' + t + '</span>').join("");
     card.innerHTML =
-      '<h2>Your Brand DNA</h2>' +
+      '<h2>Okay — here’s what I picked up about you.</h2>' +
       '<div class="dna">' +
-        '<div class="arch">' + built.primary + ' <small>primary archetype</small></div>' +
+        '<div class="arch">' + built.primary + ' <small>the energy underneath it all</small></div>' +
         '<p>' + ARCH[built.primary] + '</p>' +
-        (built.secondary ? '<div class="arch">' + built.secondary + ' <small>secondary</small></div><p>' + ARCH[built.secondary] + '</p>' : '') +
+        (built.secondary ? '<div class="arch">' + built.secondary + ' <small>with a thread of this</small></div><p>' + ARCH[built.secondary] + '</p>' : '') +
         '<div class="tags">' + tagHtml + '</div>' +
       '</div>' +
-      '<p class="lede">Below is your full profile. Download it, or hand it to Claude for the fully-synthesized version.</p>' +
+      '<p class="lede">We just talked — but here’s the read underneath it. This is the brand DNA I heard in your answers. Take it with you, or hand it to Claude to go deeper.</p>' +
       '<div class="actions">' +
         '<button class="btn primary" id="dl">Download brand-dna.md</button>' +
         '<button class="btn" id="refine">Copy prompt for Claude</button>' +
@@ -585,8 +584,8 @@
   // ===== Start / resume ===================================================
   function begin(resume) {
     $("progress").hidden = false;
-    if (resume) { addSectionTag("Resumed"); addRow("them", "Welcome back — picking up where we left off."); }
-    else { addRow("them", "Hey — I'm here to decode your brand's DNA. I'll ask a handful of questions; some you'll answer in your own words, some are just quick taps. No wrong answers — the honest, specific ones are the best. Ready?"); }
+    if (resume) { addRow("them", "Oh good, you're back — let's pick up where we left off."); }
+    else { addRow("them", "A mutual friend swore I had to meet you — so, hi. No agenda here, I just want to actually get to know you and the thing you're building. Cool if I just ask you stuff as it comes to me? The messy, honest answers beat the polished ones every time."); }
     present();
   }
 
