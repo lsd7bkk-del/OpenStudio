@@ -1,0 +1,224 @@
+<title>A short conversation</title>
+<style>
+  :root {
+    --ground: #F4F3EF; --surface: #FFFFFF; --surface-2: #EFEEE8;
+    --ink: #1B1D1C; --muted: #6C6F6A; --line: #E2E1DA;
+    --accent: #1E6E68; --accent-soft: #d7e7e5; --glow: #C98A2E;
+    --shadow: 0 1px 2px rgba(20,25,22,.04), 0 10px 30px rgba(20,25,22,.07);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ground: #131513; --surface: #1B1E1B; --surface-2: #22261F;
+      --ink: #EAEAE3; --muted: #969990; --line: #2A2E2A;
+      --accent: #54B7AD; --accent-soft: #1c2f2c; --glow: #E0AE52;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 12px 34px rgba(0,0,0,.4); }
+  }
+  :root[data-theme="dark"] { --ground: #131513; --surface: #1B1E1B; --surface-2: #22261F;
+    --ink: #EAEAE3; --muted: #969990; --line: #2A2E2A;
+    --accent: #54B7AD; --accent-soft: #1c2f2c; --glow: #E0AE52;
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 12px 34px rgba(0,0,0,.4); }
+  :root[data-theme="light"] { --ground: #F4F3EF; --surface: #FFFFFF; --surface-2: #EFEEE8;
+    --ink: #1B1D1C; --muted: #6C6F6A; --line: #E2E1DA;
+    --accent: #1E6E68; --accent-soft: #d7e7e5; --glow: #C98A2E;
+    --shadow: 0 1px 2px rgba(20,25,22,.04), 0 10px 30px rgba(20,25,22,.07); }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 18px; }
+  h1 { font-family: var(--serif); font-weight: 600; text-wrap: balance;
+    font-size: clamp(30px, 6vw, 44px); line-height: 1.08; letter-spacing: -.01em; margin: 0 0 18px; }
+  .lede { font-size: 18px; color: var(--ink); margin: 0 0 8px; max-width: 60ch; }
+  .lede.muted { color: var(--muted); font-size: 16.5px; margin-bottom: 34px; }
+
+  .steps { list-style: none; counter-reset: s; padding: 0; margin: 0 0 34px;
+    display: flex; flex-direction: column; gap: 18px; }
+  .steps li { counter-increment: s; position: relative; padding-left: 46px; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: -2px;
+    width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft);
+    color: var(--accent); font-weight: 700; font-size: 14px; display: grid; place-items: center;
+    font-variant-numeric: tabular-nums; }
+  .steps b { font-weight: 600; }
+  .steps span { color: var(--muted); }
+
+  .panel { background: var(--surface); border: 1px solid var(--line);
+    border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; margin: 0 0 20px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .panel-head span { font-size: 13px; color: var(--muted); font-weight: 600;
+    letter-spacing: .02em; }
+  .copy { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+    font-family: var(--sans); font-size: 13px; font-weight: 600; padding: 8px 14px;
+    border-radius: 9px; cursor: pointer; transition: transform .12s, border-color .2s, background .2s; }
+  .copy:hover { transform: translateY(-1px); border-color: var(--accent); }
+  .copy.done { background: var(--accent); color: #06110f; border-color: transparent; }
+  .code { max-height: 320px; overflow: auto; background: var(--surface); }
+  .code pre { margin: 0; padding: 18px 18px 22px; font-family: var(--mono);
+    font-size: 12.5px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; color: var(--ink); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 30px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-family: var(--sans); font-size: 15px; font-weight: 600; padding: 12px 20px;
+    border-radius: 11px; cursor: pointer; border: 1px solid var(--line); background: var(--surface-2);
+    color: var(--ink); transition: transform .12s, border-color .2s; }
+  .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: #06110f; border-color: transparent; }
+  .btn svg { width: 17px; height: 17px; }
+
+  .note { font-size: 14.5px; color: var(--muted); border-left: 2px solid var(--line);
+    padding: 2px 0 2px 16px; margin: 0; max-width: 58ch; }
+
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--ground); padding: 10px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; opacity: 0; transition: all .3s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">A short conversation</div>
+  <h1>Before we begin, I'd like you to talk with Claude.</h1>
+  <p class="lede">It takes about fifteen minutes. It isn't a form or a questionnaire — it
+    simply has a conversation with you, and most people find it genuinely enjoyable. It
+    helps me understand you and your work properly before we start.</p>
+  <p class="lede muted">There are no right answers. The candid, unpolished version of you is
+    far more useful than the tidy one.</p>
+
+  <ol class="steps">
+    <li><b>Open a new chat with Claude.</b> <span>Use the button below.</span></li>
+    <li><b>Copy the text and paste it in.</b> <span>Send it as your first message.</span></li>
+    <li><b>Then just talk it through</b> <span>— openly and honestly, in your own words.</span></li>
+    <li><b>At the end it will summarise what it understood.</b> <span>Copy that and send it back to me.</span></li>
+  </ol>
+
+  <div class="cta-row">
+    <a class="btn primary" href="https://claude.ai/new" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+      Open Claude
+    </a>
+    <button class="copy btn" id="copyTop" type="button">Copy the text</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <span>Paste this into Claude</span>
+      <button class="copy" id="copyBtn" type="button">Copy</button>
+    </div>
+    <div class="code"><pre id="prompt">You are a thoughtful, articulate person having a genuine, unhurried conversation
+with me to understand me and my work properly. Treat it as a considered
+conversation between professionals — warm and personable, but composed, never
+overly familiar or matey. It is not an interview, a survey, or an exercise, and
+you should never describe it as one.
+
+Beneath the ease of the conversation, you are listening closely — because by the
+end you want to be able to reflect back a clear, honest picture of me and what I
+am building: who I am, where it is going, what is strong and what is unfinished,
+the taste and sensibility beneath it, how I express myself, and who it is truly
+for. Keep that purpose to yourself.
+
+HOW TO CONDUCT YOURSELF:
+- Speak like a person, not a checklist. One thing at a time. Wait for me, and
+  respond to what I actually said before moving on.
+- Never announce structure or topics. No "next, let's discuss...", no numbering,
+  no "section". Let the conversation move naturally.
+- Seek the real answer. If I offer something polished, rehearsed, or
+  press-conference-like, note it politely and press a little further: "That
+  sounds like the version you'd give on a panel — what is the truer one?" or
+  "Give me the specific instance — a name, a figure, a moment." Don't accept the
+  vague, and don't let me retreat into "I don't know."
+- Follow what is genuinely interesting. If something unexpected or candid
+  surfaces, pursue it.
+- Notice how I express myself — my rhythm, my phrasing, the words I favour, what
+  I keep returning to.
+- Keep it human and reasonably brief — around twenty exchanges.
+
+READ ME, RATHER THAN QUIZ ME — the essential part:
+- Never ask me to describe my "style", my "aesthetic", my "archetype", or "who my
+  audience is" in those terms. I cannot answer that directly, and I will only
+  perform.
+- Instead, introduce indirect questions and read the pattern yourself: the music
+  playing where I work, a book that would sit on my shelf, the room in which I
+  feel most myself, what the thing I am building would be if it were a material I
+  could hold, the colours of my world, an ideal day away from work, whose taste I
+  simply trust. Work several of these in, unobtrusively, among everything else.
+
+GROUND TO COVER (never recite this — let it arise naturally):
+- who I actually am, beyond the title, and when this began to feel like mine
+- something I am now certain of that I would once have argued against
+- how I would explain what I do to someone I respect who genuinely wants to know
+- the part of it I would stand behind without hesitation — and the part that,
+  honestly, is not yet where I want it
+- where I see it a few years from now, working well — and what "success" feels
+  like beyond money
+- the indirect taste questions above, and whose taste I trust
+- the life the people I serve are truly reaching for — their Sunday morning, not
+  their job title — and the single feeling, and the single action, I want them to
+  leave with
+- the words and phrases I use often, and the things others in my field say that
+  quietly make me wince
+
+WHEN YOU GENUINELY UNDERSTAND ME, present it without clinical language — say
+something measured such as "Here is what I've come to understand about you," and
+set it out in Markdown so I can keep it:
+- the sensibility running beneath it all (name it in a word or two, and why —
+  drawing on what I said, never on a question you asked)
+- me and what I am building, in one honest line
+- the aesthetic I clearly lean toward — colour, texture, the character of the type
+- my world: the sounds, spaces, materials and names I gravitated toward, as a
+  short moodboard in words
+- where it is heading, and what success feels like
+- what is genuinely strong, and the single area with the most room to grow
+- who it is truly for, and the life they are reaching for
+- how I sound: my tone, my rhythm, the phrases that are mine, and the things I
+  would never say
+- three to five lines, in my exact words, that capture how I speak
+
+Now — do not explain any of this to me. Simply greet me as you naturally would,
+and ask your first genuine question.</pre></div>
+  </div>
+
+  <p class="note">You're welcome to speak your answers instead of typing them — any
+    voice-to-text works, and talking tends to be quicker and more honest.</p>
+</div>
+
+<div class="toast" id="toast">Copied — now paste it into Claude</div>
+
+<script>
+  (function () {
+    "use strict";
+    var promptEl = document.getElementById("prompt");
+    var toast = document.getElementById("toast");
+    var toastT;
+    function showToast() {
+      toast.classList.add("show");
+      clearTimeout(toastT);
+      toastT = setTimeout(function () { toast.classList.remove("show"); }, 2400);
+    }
+    function markDone(btn, label) {
+      var original = btn.textContent;
+      btn.textContent = label;
+      btn.classList.add("done");
+      setTimeout(function () { btn.textContent = original; btn.classList.remove("done"); }, 2000);
+    }
+    function copy(btn) {
+      var text = promptEl.textContent;
+      function ok() { markDone(btn, "Copied ✓"); showToast(); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, function () { fallback(text, ok); });
+      } else { fallback(text, ok); }
+    }
+    function fallback(text, done) {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      ta.remove(); done();
+    }
+    document.getElementById("copyBtn").addEventListener("click", function () { copy(this); });
+    document.getElementById("copyTop").addEventListener("click", function () { copy(this); });
+  })();
+</script>
