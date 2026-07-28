@@ -153,6 +153,10 @@ export default function TalkPage() {
       <style jsx global>{`
         html { color-scheme: dark; }
         html, body { margin: 0; background: #0f1211; }
+        /* The app's global ambient layer (body::before) breathes its opacity on
+           a 16s loop and overlays this full-screen page — hide it on /talk so
+           the text never fades. */
+        body::before { display: none !important; }
       `}</style>
       <style jsx>{`
         .page {
@@ -162,6 +166,7 @@ export default function TalkPage() {
           --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
           --sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
           color-scheme: dark;
+          position: relative; z-index: 1;
           min-height: 100vh; background: var(--ground); color: var(--ink);
           font-family: var(--sans); display: flex; flex-direction: column;
         }
