@@ -151,25 +151,19 @@ export default function TalkPage() {
       )}
 
       <style jsx global>{`
-        html, body { margin: 0; background: #f4f3ef; }
-        @media (prefers-color-scheme: dark) { html, body { background: #0f1211; } }
+        html { color-scheme: dark; }
+        html, body { margin: 0; background: #0f1211; }
       `}</style>
       <style jsx>{`
         .page {
-          --ground: #f4f3ef; --surface: #ffffff; --surface-2: #efeee8;
-          --ink: #1b1d1c; --muted: #6c6f6a; --line: #e2e1da;
-          --accent: #1e6e68; --accent-soft: #d7e7e5;
+          --ground: #0f1211; --surface: #242b27; --surface-2: #2d352f;
+          --ink: #f4f5f0; --muted: #c3c7bd; --line: #3c443d;
+          --accent: #5ec4b9; --accent-soft: #244a44;
           --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
           --sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+          color-scheme: dark;
           min-height: 100vh; background: var(--ground); color: var(--ink);
           font-family: var(--sans); display: flex; flex-direction: column;
-        }
-        @media (prefers-color-scheme: dark) {
-          .page {
-            --ground: #0f1211; --surface: #242b27; --surface-2: #2d352f;
-            --ink: #f2f3ee; --muted: #b3b7ad; --line: #3c443d;
-            --accent: #5ec4b9; --accent-soft: #244a44;
-          }
         }
 
         /* Intro */
@@ -181,7 +175,6 @@ export default function TalkPage() {
         .btn { font-family: var(--sans); font-size: 16px; font-weight: 600; padding: 13px 24px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); cursor: pointer; transition: transform .12s, border-color .2s; }
         .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
         .btn.primary { background: var(--accent); color: #06110f; border-color: transparent; }
-        @media (prefers-color-scheme: dark) { .btn.primary { color: #06110f; } }
 
         /* Chat */
         .chat { display: flex; flex-direction: column; height: 100vh; max-width: 720px; width: 100%; margin: 0 auto; }
