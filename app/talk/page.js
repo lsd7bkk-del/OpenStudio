@@ -151,7 +151,8 @@ export default function TalkPage() {
       )}
 
       <style jsx global>{`
-        html, body { background: var(--tk-ground, #f4f3ef); }
+        html, body { margin: 0; background: #f4f3ef; }
+        @media (prefers-color-scheme: dark) { html, body { background: #0f1211; } }
       `}</style>
       <style jsx>{`
         .page {
@@ -165,9 +166,9 @@ export default function TalkPage() {
         }
         @media (prefers-color-scheme: dark) {
           .page {
-            --ground: #131513; --surface: #1b1e1b; --surface-2: #22261f;
-            --ink: #eaeae3; --muted: #969990; --line: #2a2e2a;
-            --accent: #54b7ad; --accent-soft: #1c2f2c;
+            --ground: #0f1211; --surface: #242b27; --surface-2: #2d352f;
+            --ink: #f2f3ee; --muted: #b3b7ad; --line: #3c443d;
+            --accent: #5ec4b9; --accent-soft: #244a44;
           }
         }
 
@@ -196,7 +197,7 @@ export default function TalkPage() {
         @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
         @media (prefers-reduced-motion: reduce) { .row { animation: none; } }
         .avatar { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #06110f; display: grid; place-items: center; font-family: var(--serif); font-size: 15px; margin-top: 2px; }
-        .bubble { background: var(--surface); border: 1px solid var(--line); border-radius: 15px; border-top-left-radius: 5px; padding: 12px 16px; font-size: 16px; line-height: 1.55; max-width: 80%; box-shadow: 0 1px 2px rgba(20,25,22,.04); white-space: pre-wrap; word-wrap: break-word; }
+        .bubble { background: var(--surface); border: 1px solid var(--line); border-radius: 15px; border-top-left-radius: 5px; padding: 12px 16px; font-size: 16px; line-height: 1.55; max-width: 80%; box-shadow: 0 1px 3px rgba(0,0,0,.12); white-space: pre-wrap; word-wrap: break-word; }
         .me .bubble { background: var(--accent-soft); border-color: transparent; border-top-left-radius: 15px; border-top-right-radius: 5px; }
         .bubble :global(strong) { font-weight: 600; }
         .bubble :global(.h) { font-family: var(--serif); font-weight: 600; display: block; margin: 10px 0 2px; }
@@ -209,9 +210,9 @@ export default function TalkPage() {
         .error { align-self: center; font-size: 14px; color: #b5432e; background: var(--surface); border: 1px solid var(--line); padding: 8px 14px; border-radius: 10px; }
         .error button { margin-left: 8px; background: none; border: 0; color: var(--accent); font-weight: 600; cursor: pointer; text-decoration: underline; }
 
-        .composer { display: flex; gap: 10px; align-items: flex-end; padding: 14px 20px 20px; background: var(--ground); }
-        textarea { flex: 1; resize: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; border-radius: 14px; padding: 12px 16px; max-height: 160px; outline: none; }
-        textarea:focus { border-color: var(--accent); }
+        .composer { display: flex; gap: 10px; align-items: flex-end; padding: 14px 20px 20px; background: var(--ground); border-top: 1px solid var(--line); }
+        textarea { flex: 1; resize: none; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; border-radius: 14px; padding: 12px 16px; max-height: 160px; outline: none; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+        textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
         textarea::placeholder { color: var(--muted); }
         .send { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px; border: 0; background: var(--accent); color: #06110f; cursor: pointer; display: grid; place-items: center; transition: opacity .2s, transform .12s; }
         .send:hover:not(:disabled) { transform: translateY(-1px); }
