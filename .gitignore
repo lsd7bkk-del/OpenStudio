@@ -41,3 +41,6 @@ out/
 OS Logo.png
 Logo Full.png
 Logo.jpg
+
+# Claude Code: generated skill backups
+.claude/skills/*.bak-*
